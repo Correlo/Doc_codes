@@ -1,15 +1,10 @@
 import numpy as np
 import h5py
-import matplotlib
-from math import pi, sqrt, exp, tanh
-from sys import exit
 from scipy.interpolate import interp1d
 # Packages from the developer
 from const import *
-from hashes import *
 
 # Make sure filename has h5 extension otherwise visit won't recognize it!
-#eqfilename = "eqmytestfile.h5"
 eqfilename = "Equilibrium/Strat_B0x_2_3208_1f.h5"
 
 # Configuration parameters
@@ -91,7 +86,8 @@ pe_n00 = nn00 * BK * Temp_n[0]
 pe_c00 = nc00 * BK * Temp_c[0]
 
 Temp = 0.5 * (Temp_n + Temp_c)
-alpha = MIH / MH**2 * np.sqrt((8 * BK * Temp)/(pi * MIH)) * SIGMA_IN +  MEH / MH**2 * np.sqrt((8 * BK * Temp)/(pi*MEH))  * SIGMA_EN
+alpha = MIH / MH**2 * np.sqrt((8 * BK * Temp) / (np.pi * MIH)) * SIGMA_IN + \
+        MEH / MH**2 * np.sqrt((8 * BK * Temp) / (np.pi * MEH)) * SIGMA_EN
 
 print("pec00 %e" % (pe_c00))
 print("pen00 %e" % (pe_n00))
@@ -105,7 +101,7 @@ rho_c0 = np.zeros((mz_ghost,my,mx))
 B0x    = np.zeros((mz_ghost,my,mx))
 
 print("Bx00 %e" % (B00))
-print("Va0 %e" % sqrt(B00**2/(MU0 * MH* (nn00 + ne00) )))
+print("Va0 %e" % np.sqrt(B00**2/(MU0 * MH* (nn00 + ne00) )))
 
 print("G = ", G)
 print("Temp_n = ", np.min(Temp_n), np.max(Temp_n), np.mean(Temp_n))
