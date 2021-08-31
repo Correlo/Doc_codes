@@ -1,22 +1,29 @@
 import numpy as np
 import h5py
 from scipy.interpolate import interp1d
+from configparser import ConfigParser
 # Packages from the developer
 from const import *
 
+#Read params.ini
+params = ConfigParser()
+params.sections()
+params.read('../Doc_data/Config/iniCond.ini')
+Params = params['params']
+
 # Make sure filename has h5 extension otherwise visit won't recognize it!
-eqfilename = "../Doc_data/Equilibrium/Strat_3206.h5"
-valc_file  = "../Doc_data/Equilibrium/valc.dat" 
+eqfilename = Params['eqfilename']
+valc_file  = Params['valc_file'] 
 
 # Configuration parameters
-mx = 1
-my = 1
-mz = 3200
-my_ghost = 3
-B00 = 1e-4
-oneFluid = False
-with_B0x = False
-div = 2.
+mx = int(Params['mx'])
+my = int(Params['my'])
+mz = int(Params['mz'])
+my_ghost = int(Params['my_ghost'])
+B00 = float(Params['B00'])
+oneFluid = bool(Params['oneFluid'])
+with_B0x = bool(Params['with_B0x'])
+div = float(Params['div'])
 
 
 # Ghost param
