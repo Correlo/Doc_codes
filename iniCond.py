@@ -6,6 +6,7 @@ from const import *
 
 # Make sure filename has h5 extension otherwise visit won't recognize it!
 eqfilename = "../Doc_data/Equilibrium/Strat_3206.h5"
+valc_file  = "../Doc_data/Equilibrium/valc.dat" 
 
 # Configuration parameters
 mx = 1
@@ -17,11 +18,12 @@ oneFluid = False
 with_B0x = False
 div = 2.
 
+
 # Ghost param
 mz_ghost = mz + 2*my_ghost
 
 # VALC
-zzValc, tempValc, nnValc, neValc, rhoValc = np.loadtxt("valc.dat", usecols=(0,3,5,6,9), unpack=True)
+zzValc, tempValc, nnValc, neValc, rhoValc = np.loadtxt(valc_file, usecols=(0,3,5,6,9), unpack=True)
 
 
 ## SUP LIMIT at T=9000K (at z approx 2.1 Mm) ##
