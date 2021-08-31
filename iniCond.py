@@ -5,17 +5,17 @@ from scipy.interpolate import interp1d
 from const import *
 
 # Make sure filename has h5 extension otherwise visit won't recognize it!
-eqfilename = "Equilibrium/Strat_B0x_2_3208_1f.h5"
+eqfilename = "../Doc_data/Equilibrium/Strat_3206.h5"
 
 # Configuration parameters
 mx = 1
 my = 1
 mz = 3200
-my_ghost = 4
+my_ghost = 3
 B00 = 1e-4
-oneFluid = True
-with_B0x = True
-div = 4.
+oneFluid = False
+with_B0x = False
+div = 2.
 
 # Ghost param
 mz_ghost = mz + 2*my_ghost
