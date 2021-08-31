@@ -6,9 +6,8 @@ import matplotlib.pyplot as plt
 
 # Parameters
 
-h5eqatm = 'Equilibrium/Strat_B0x_2_3206.h5'
-#h5eqatm = 'Equilibrium/eq-twofl.h5'
-Output  = 'nu_A.h5'
+h5eqatm = '../Doc_data/Equilibrium/Strat_B0x_3208.h5'
+Output  = '../Doc_data/Equilibrium/nu_A.h5'
 
 ## Functions ##
 
