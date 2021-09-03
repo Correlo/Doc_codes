@@ -1,6 +1,5 @@
 import numpy as np
 import h5py
-from scipy.interpolate import interp1d
 from configparser import ConfigParser
 # Packages from the developer
 from const import *
@@ -21,8 +20,8 @@ my = int(Params['my'])
 mz = int(Params['mz'])
 my_ghost = int(Params['my_ghost'])
 B00 = float(Params['B00'])
-oneFluid = bool(Params['oneFluid'])
-with_B0x = bool(Params['with_B0x'])
+oneFluid = bool(int(Params['oneFluid']))
+with_B0x = bool(int(Params['with_B0x']))
 div = float(Params['div'])
 
 
@@ -60,23 +59,28 @@ neValc  = neValc  * 1e6
 print("Z MIN %e , MAX %e" % (np.min(zzValc), np.max(zzValc)))
 
 # Atmosphere altitude
-z, dz = np.linspace(np.min(zzValc), np.max(zzValc), mz_ghost, retstep = True)
+z = np.zeros((mz_ghost))
+# The values are selected in order to contain the ghost cells in the valc domain.
+z_min = 5.2e5  # m
+z_max = 2.08e6 # m
+z[my_ghost:-my_ghost], dz = np.linspace(z_min, z_max, mz, retstep = True)
 
+if my_ghost > 0:
+	for i in range(1, my_ghost + 1):
+		z[  my_ghost - i    ] = z[  my_ghost - i + 1] - dz
+		z[- my_ghost + i - 1] = z[- my_ghost + i - 2] + dz
+		
+		
 ## Interpolate values from VALC ##
 
 # Density
-func = interp1d(zzValc, rhoValc , kind='cubic')
-Rho  = func(z)
+Rho  = np.interp(z, zzValc, rhoValc )
 # Temp
-func = interp1d(zzValc, tempValc, kind='cubic')
-Temp = func(z)
+Temp = np.interp(z, zzValc, tempValc)
 # nn
-func = interp1d(zzValc, nnValc  , kind='cubic')
-nn   = func(z)
+nn   = np.interp(z, zzValc, nnValc  )
 # ne
-func = interp1d(zzValc, neValc  , kind='cubic')
-ne   = func(z)
-
+ne   = np.interp(z, zzValc, neValc  )
 
 # Get values at the bottom of the atmosphere in the VALC model
 nn00 = nn[0]
@@ -136,8 +140,8 @@ for i in range(mx):
 #make pMag = pe_n0[eqP]
 eqP = int(mz_ghost / div) 
 pmag = 0.5 * B0x**2 / MU0
-const = pe_n0[eqP,0,0] - pmag[eqP,0,0]
-B0x = np.sqrt(2 * MU0 * (pmag + const))
+cte = pe_n0[eqP,0,0] - pmag[eqP,0,0]
+B0x = np.sqrt(2 * MU0 * (pmag + cte))
 
 zero = np.zeros((mz_ghost,my,mx), dtype = np.longdouble)
 
