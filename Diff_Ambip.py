@@ -1,13 +1,18 @@
 import numpy as np
 import h5py
 from const import *
+from configparser import ConfigParser
 
 import matplotlib.pyplot as plt
 
-# Parameters
+# Read Diff_Amb.ini
+params = ConfigParser()
+params.sections()
+params.read('../Doc_data/Config/Diff_Ambip.ini')
+Params = params['params']
 
-h5eqatm = '../Doc_data/Equilibrium/Strat_B0x_3208.h5'
-Output  = '../Doc_data/Equilibrium/nu_A.h5'
+h5eqatm = Params['h5eqatm']
+Output  = Params['Output']
 
 ## Functions ##
 

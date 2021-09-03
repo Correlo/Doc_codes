@@ -4,7 +4,7 @@ from configparser import ConfigParser
 # Packages from the developer
 from const import *
 
-#Read params.ini
+# Read iniCond.ini
 params = ConfigParser()
 params.sections()
 params.read('../Doc_data/Config/iniCond.ini')
