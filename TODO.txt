@@ -8,3 +8,7 @@ List of things TO DO currently:
 - Check if the solution obtained by Paul Cally satisfies the numerical solutions.
 - Introduce more complex drivers into simulations.
 - Find the template of an A&A.
+- Check the differences between the background files generated with the old and new iniCond.py file.
+- Read chapters 3 and 4 of "Principles of Magnetohydrodynamics".
+- Prepare the new Mac to working.
+

@@ -1,6 +1,7 @@
 import numpy as np
 import h5py
 from configparser import ConfigParser
+from scipy.interpolate import interp1d
 # Packages from the developer
 from const import *
 
@@ -74,13 +75,26 @@ if my_ghost > 0:
 ## Interpolate values from VALC ##
 
 # Density
-Rho  = np.interp(z, zzValc, rhoValc )
+func = interp1d(zzValc, rhoValc , kind='cubic')
+Rho  = func(z)
 # Temp
-Temp = np.interp(z, zzValc, tempValc)
+func = interp1d(zzValc, tempValc, kind='cubic')
+Temp = func(z)
 # nn
-nn   = np.interp(z, zzValc, nnValc  )
+func = interp1d(zzValc, nnValc  , kind='cubic')
+nn   = func(z)
 # ne
-ne   = np.interp(z, zzValc, neValc  )
+func = interp1d(zzValc, neValc  , kind='cubic')
+ne   = func(z)
+
+# Density
+# Rho  = np.interp(z, zzValc, rhoValc )
+# Temp
+# Temp = np.interp(z, zzValc, tempValc)
+# nn
+# nn   = np.interp(z, zzValc, nnValc  )
+# ne
+# ne   = np.interp(z, zzValc, neValc  )
 
 # Get values at the bottom of the atmosphere in the VALC model
 nn00 = nn[0]
