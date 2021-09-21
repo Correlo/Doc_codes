@@ -1,34 +1,38 @@
 import numpy as np
 import h5py
-#from configparser import ConfigParser
+from configparser import ConfigParser
 
-def Gauss(z, mu, sigma):
+def Gauss(z, mu, sigma, N):
 
-	N   = 1 / (sigma * np.sqrt(2 * np.pi))
+	# N   = 1 / (sigma * np.sqrt(2 * np.pi))
 	EXP = np.exp(- (z - mu)**2 / (2 * sigma**2))
 	G = N * EXP
 	return G
 
 # Read iniCond.ini
-#params = ConfigParser()
-#params.sections()
-#params.read('../Doc_data/Config/iniCond.ini')
-#Params = params['params']
+params = ConfigParser()
+params.sections()
+params.read('../Doc_data/Config/Gaus_file.ini')
+Params = params['params']
 
 
 
 # Configuration parameters
-filename    = Params['filename']
+eqfilename  = Params['eqfilename']
+reffile     = Params['reffile']
 mx          = int(Params['mx'])
 my          = int(Params['my'])
 mz          = int(Params['mz'])
 my_ghost    = int(Params['my_ghost'])
-pmlFraction = 0.0175 # float(Params['pmlFraction'])
-sigma_p     = 0.5    # float(Params['sigma_p'])
-
+pmlFraction = float(Params['pmlFraction'])
+sigma_p     = float(Params['sigma_p'])    
+N           = float(Params['N'])
 
 # Ghost param
 mz_ghost = mz + 2*my_ghost
+
+# Obtain dz 
+with h5py.File(reffile, 'r') as f: dz = f.attrs['dz']
 
 # Gauss parameters
 z  = np.arange(mz_ghost)
@@ -37,7 +41,7 @@ sigma = int(mz_ghost * pmlFraction) * sigma_p
 
 # Guassian function
 Gaus = np.zeros(mz_ghost)
-Gaus[mu:] = Gauss(z[mu:], mu, sigma)
+Gaus[mu:] = Gauss(z[mu:], mu, sigma, N)
 
 
 

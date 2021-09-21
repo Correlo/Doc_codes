@@ -1,13 +1,11 @@
 List of things TO DO currently:
 
 - Upload all my TFM codes to GitHub.
-- Generate the appropriate background atmosphere for my simulations with the updated iniCond.py.
 - Explore the simulation configurations proposed in my table.
 - Minimize the numerical effects in the simplest simulation.
 - Learn a basic use of Mathematica.
 - Check if the solution obtained by Paul Cally satisfies the numerical solutions.
 - Introduce more complex drivers into simulations.
-- Check the differences between the background files generated with the old and new iniCond.py file.
 - Read chapter 4 of "Principles of Magnetohydrodynamics".
 - Read the papers suggested by David.
 - Read the paper of R. Soler about the propagation of magneto-acoustic waves.
