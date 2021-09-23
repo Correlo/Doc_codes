@@ -2,8 +2,6 @@ List of things TO DO currently:
 
 - Upload all my TFM codes to GitHub.
 - Explore the simulation configurations proposed in my table.
-- Minimize the numerical effects in the simplest simulation.
-- Learn a basic use of Mathematica.
 - Check if the solution obtained by Paul Cally satisfies the numerical solutions.
 - Introduce more complex drivers into simulations.
 - Read chapter 4 of "Principles of Magnetohydrodynamics".
@@ -12,7 +10,7 @@ List of things TO DO currently:
 - Talk with Peter Hunana.
 - Talk with Fan Zhang.
 - Prepare a presentation for the next week meeting.
-- Configure a Gaussian filter file for the simulations.
 - Find bibliography for the introduction of the publication.
+- In the first R. Soler paper, reproduce the Laplace transform calculus.
 
 
