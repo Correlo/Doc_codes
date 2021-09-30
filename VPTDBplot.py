@@ -51,6 +51,7 @@ plt.close()
 fig, ax = plt.subplots(5, 1, sharex = True, figsize = (12, 8))
 fig.subplots_adjust(hspace = 0)
 
+ax[0].set_title('Time = %.1f s' % t, fontsize = 15)
 ax[0].plot(Z, vz_c, '-r', label = 'charges'); ax[0].plot(Z, vz_n, '-b' , label = 'neutrals');
 ax[0].plot(Z, vz  , '-g', label = '1f'     )
 ax[1].plot(Z, Pc  , '-r'); ax[1].plot(Z, Pn , '-b'); ax[1].plot(Z, Pe, '-g')
@@ -64,9 +65,32 @@ ax[4].set_ylabel(r'$B_{1,x}$ [T]', fontsize = 14)
 ax[4].set_xlabel('Altitude [Km]', fontsize = 14)
 
 ax[0].legend(fontsize = 13, loc = 'upper left')
+ax[4].set_xlim(min(Z), max(Z) - 50)
+
+ax[0].tick_params(axis ='both', direction='inout', which='minor',
+                 length=3, width=.5,labelsize=13, right = True, top = True, bottom = False)
+ax[0].tick_params(axis='both', direction='in', which='major',
+                 length=6, width=1, labelsize=13, right = True, top = True)
+ax[1].tick_params(axis ='both', direction='inout', which='minor',
+                 length=3, width=.5,labelsize=13, right = True, bottom = False)
+ax[1].tick_params(axis='both', direction='in', which='major',
+                 length=6, width=1, labelsize=13, right = True, top = True)
+ax[2].tick_params(axis ='both', direction='inout', which='minor',
+                 length=3, width=.5,labelsize=13, right = True, bottom = False)
+ax[2].tick_params(axis='both', direction='in', which='major',
+                 length=6, width=1, labelsize=13, right = True, top = True)
+ax[3].tick_params(axis ='both', direction='inout', which='minor',
+                 length=3, width=.5,labelsize=13, right = True, bottom = False)
+ax[3].tick_params(axis='both', direction='in', which='major',
+                 length=6, width=1, labelsize=13, right = True, top = True)
+ax[4].tick_params(axis ='both', direction='inout', which='minor',
+                 length=3, width=.5,labelsize=13, right = True)
+ax[4].tick_params(axis='both', direction='in', which='major',
+                 length=6, width=1, labelsize=13, right = True, top = True)
 
 
 for i in range(5): ax[i].ticklabel_format(axis = "y", style = "sci", scilimits = (0,0))
+for i in range(5): ax[i].minorticks_on()
 
 plt.show()
 
