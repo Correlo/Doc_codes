@@ -6,11 +6,19 @@ List of things TO DO currently:
 - Introduce more complex drivers into simulations.
 - Read chapter 4 of "Principles of Magnetohydrodynamics".
 - Read the papers suggested by David.
-- Read the paper of R. Soler about the propagation of magneto-acoustic waves.
-- Talk with Peter Hunana.
 - Talk with Fan Zhang.
-- Prepare a presentation for the next week meeting.
 - Find bibliography for the introduction of the publication.
 - In the first R. Soler paper, reproduce the Laplace transform calculus.
+- Plot the terms of the single fluid energy equation.
+- Plot the temperature of neutrals and ions separately.
+- Use only linear terms and increase the amplitude.
+- Plot the drift velocity.
+- Extent the chromosphere to the transition region.
+- Find the publication of Rankine-Hugoniot relations.
+- Plot T/R vs collisional frequency (see R. Soler et al. 2013a)
+- Calculated the solution of the wave equations using the Laplace transform.
+- Check Peter's equations.
+- Define a coefficient for the smoothing factor as function of the tau parameter.
+
 
 
