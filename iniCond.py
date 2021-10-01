@@ -87,15 +87,6 @@ nn   = func(z)
 func = interp1d(zzValc, neValc  , kind='cubic')
 ne   = func(z)
 
-# Density
-# Rho  = np.interp(z, zzValc, rhoValc )
-# Temp
-# Temp = np.interp(z, zzValc, tempValc)
-# nn
-# nn   = np.interp(z, zzValc, nnValc  )
-# ne
-# ne   = np.interp(z, zzValc, neValc  )
-
 # Get values at the bottom of the atmosphere in the VALC model
 nn00 = nn[0]
 ne00 = ne[0]

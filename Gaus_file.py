@@ -20,19 +20,19 @@ Params = params['params']
 # Configuration parameters
 eqfilename  = Params['eqfilename']
 reffile     = Params['reffile']
-mx          = int(Params['mx'])
-my          = int(Params['my'])
-mz          = int(Params['mz'])
-my_ghost    = int(Params['my_ghost'])
 pmlFraction = float(Params['pmlFraction'])
 sigma_p     = float(Params['sigma_p'])    
 N           = float(Params['N'])
 
+# Obtain dz 
+with h5py.File(reffile, 'r') as f: 
+
+	dz         = f.attrs['dz']
+	mx, my, mz = f.attrs['dims']
+	my_ghost   = f.attrs['my_ghost']
+	
 # Ghost param
 mz_ghost = mz + 2*my_ghost
-
-# Obtain dz 
-with h5py.File(reffile, 'r') as f: dz = f.attrs['dz']
 
 # Gauss parameters
 z  = np.arange(mz_ghost)

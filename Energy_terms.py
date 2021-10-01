@@ -30,10 +30,6 @@ H5dir   = Params['H5dir'  ]
 Outname = Params['Outname'] 
 n_file  = int(Params['n_file' ])
 dt = float(Params['dt']) # s
-mx = int(Params['mx'])
-my = int(Params['my'])
-mz = int(Params['mz'])
-my_ghost = int(Params['my_ghost'])
 with_B0x = bool(int(Params['with_B0x']))
 
 
@@ -41,35 +37,42 @@ with_B0x = bool(int(Params['with_B0x']))
 n_dpts = 100
 
 # Read the fields
-with h5py.File(H5file, 'r') as H5Obj:
+with h5py.File(H5file, 'r') as H5obj:
 
-	dz   = H5Obj.attrs['dz'][0]
-	vz_c = np.array(H5Obj['vz_c'  ])[my_ghost:-my_ghost,0,0]
-	vz_n = np.array(H5Obj['vz_n'  ])[my_ghost:-my_ghost,0,0]
-	Pc   = np.array(H5Obj['pe_c'  ])[my_ghost:-my_ghost,0,0]
-	Pn   = np.array(H5Obj['pe_n'  ])[my_ghost:-my_ghost,0,0]
-	Tc   = np.array(H5Obj['temp_c'])[my_ghost:-my_ghost,0,0]
-	Tn   = np.array(H5Obj['temp_n'])[my_ghost:-my_ghost,0,0]
-	Dc   = np.array(H5Obj['rho_c' ])[my_ghost:-my_ghost,0,0]
-	Dn   = np.array(H5Obj['rho_n' ])[my_ghost:-my_ghost,0,0]
+	# Ghost shells
+	my_ghost = int(H5obj.attrs['my_ghost'])
+	# Obtain dz
+	dz = H5obj.attrs['dz'][0]
+	# Obtain data
+	vz_c = np.array(H5obj['vz_c'  ])[my_ghost:-my_ghost,0,0]
+	vz_n = np.array(H5obj['vz_n'  ])[my_ghost:-my_ghost,0,0]
+	Pc   = np.array(H5obj['pe_c'  ])[my_ghost:-my_ghost,0,0]
+	Pn   = np.array(H5obj['pe_n'  ])[my_ghost:-my_ghost,0,0]
+	Tc   = np.array(H5obj['temp_c'])[my_ghost:-my_ghost,0,0]
+	Tn   = np.array(H5obj['temp_n'])[my_ghost:-my_ghost,0,0]
+	Dc   = np.array(H5obj['rho_c' ])[my_ghost:-my_ghost,0,0]
+	Dn   = np.array(H5obj['rho_n' ])[my_ghost:-my_ghost,0,0]
+	mz   = H5obj.attrs['dims'][2]
 	
 	if with_B0x:
 	
-		B    = np.array(H5Obj['bx'])[my_ghost:-my_ghost,0,0]
+		B    = np.array(H5obj['bx'])[my_ghost:-my_ghost,0,0]
 	
 	
-with h5py.File(H5file0, 'r') as H5Obj0:
+with h5py.File(H5file0, 'r') as H5obj0:
 
-	Pc0 = np.array(H5Obj0['pe_c' ])[my_ghost:-my_ghost,0,0]
-	Pn0 = np.array(H5Obj0['pe_n' ])[my_ghost:-my_ghost,0,0]
-	Dc0 = np.array(H5Obj0['rho_c'])[my_ghost:-my_ghost,0,0]
-	Dn0 = np.array(H5Obj0['rho_n'])[my_ghost:-my_ghost,0,0]
+    # Ghost shells
+	my_ghost0 = int(H5obj0.attrs['my_ghost'])
+	Pc0 = np.array(H5obj0['pe_c' ])[my_ghost0:-my_ghost0,0,0]
+	Pn0 = np.array(H5obj0['pe_n' ])[my_ghost0:-my_ghost0,0,0]
+	Dc0 = np.array(H5obj0['rho_c'])[my_ghost0:-my_ghost0,0,0]
+	Dn0 = np.array(H5obj0['rho_n'])[my_ghost0:-my_ghost0,0,0]
 	Tc0  = MH * Pc0 / (2 * BK * Dc0)
 	Tn0  = MH * Pn0 / (BK * Dn0)
 	
 	if with_B0x:
 	
-		B0   = np.array(H5Obj0['bx'])[my_ghost:-my_ghost,0,0]
+		B0   = np.array(H5obj0['bx'])[my_ghost0:-my_ghost0,0,0]
 	
 # Total fields
 PcT = Pc + Pc0 
@@ -92,13 +95,13 @@ Dc_aux   = np.zeros((n_dpts, mz))
 Dn_aux   = np.zeros((n_dpts, mz))
 
 for i, H5file in enumerate(Filenames[n_file - int(n_dpts/2):n_file +int(n_dpts/2)]):
-	with h5py.File(H5file, 'r') as H5Obj:
-		vz_c_aux[i] = np.array(H5Obj['vz_c'  ][my_ghost:-my_ghost,0,0])
-		vz_n_aux[i] = np.array(H5Obj['vz_n'  ][my_ghost:-my_ghost,0,0])
-		Pc_aux[i]   = np.array(H5Obj['pe_c'  ][my_ghost:-my_ghost,0,0])
-		Pn_aux[i]   = np.array(H5Obj['pe_n'  ][my_ghost:-my_ghost,0,0])
-		Dc_aux[i]   = np.array(H5Obj['rho_c' ][my_ghost:-my_ghost,0,0])
-		Dn_aux[i]   = np.array(H5Obj['rho_n' ][my_ghost:-my_ghost,0,0])
+	with h5py.File(H5file, 'r') as H5obj:
+		vz_c_aux[i] = np.array(H5obj['vz_c'  ][my_ghost:-my_ghost,0,0])
+		vz_n_aux[i] = np.array(H5obj['vz_n'  ][my_ghost:-my_ghost,0,0])
+		Pc_aux[i]   = np.array(H5obj['pe_c'  ][my_ghost:-my_ghost,0,0])
+		Pn_aux[i]   = np.array(H5obj['pe_n'  ][my_ghost:-my_ghost,0,0])
+		Dc_aux[i]   = np.array(H5obj['rho_c' ][my_ghost:-my_ghost,0,0])
+		Dn_aux[i]   = np.array(H5obj['rho_n' ][my_ghost:-my_ghost,0,0])
 
 # Obtain the density of kinetic energy and internal energy
 PcTT = Pc_aux + Pc0; del(Pc_aux)
@@ -115,7 +118,7 @@ dendt = np.gradient(en, dt, axis = 0)
 to_plot =int(n_dpts/2)
 
 # Obtain the Z-axis
-Z = np.arange(decdt.shape[1]) * dz * 1e-3 + 520 # Km
+Z = np.arange(mz) * dz * 1e-3 + 520 # Km
 
 # Obtain the density of internal energy times velocity divergence
 divuec = np.gradient(vz_c * PcT / (gamma - 1), dz) 

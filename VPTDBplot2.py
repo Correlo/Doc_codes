@@ -29,7 +29,7 @@ with h5py.File(H5file_2f, 'r') as H5obj_2f:
 	# Ghost shells
 	my_ghost_2f = int(H5obj_2f.attrs['my_ghost'])
 	# Obtain dz
-	dz = H5obj_2f.attrs['dz']
+	dz = H5obj_2f.attrs['dz'][0]
 	# Obtain time
 	t = H5obj_2f.attrs['time'] 
 	# Obtain data (2f)
