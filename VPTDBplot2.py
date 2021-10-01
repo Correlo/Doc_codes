@@ -5,12 +5,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
-import sys
 from configparser import ConfigParser
 # Modules from the developer
 from const import *
 
-# Read iniCond.ini
+# Read VPTDBplot2.ini
 params = ConfigParser()
 params.sections()
 params.read('../Doc_data/Config/VPTDBplot2.ini')
