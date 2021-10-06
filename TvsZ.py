@@ -60,7 +60,6 @@ def T_mean_1f_func(snap_i, snap_f, Filenames):
 	
 			# Ghost shells
 			if (i == snap_i): my_ghost = int(H5obj.attrs['my_ghost'])
-			Dc = np.array(H5obj['rho_c' ][my_ghost:-my_ghost,0,0])
 			Tc = np.array(H5obj['temp_c'][my_ghost:-my_ghost,0,0])
 	
 		up, down = Peaks(Z, Tc)
@@ -74,6 +73,36 @@ def T_mean_1f_func(snap_i, snap_f, Filenames):
 	
 	return T_mean
 	
+def T_mean_2f_func2(snap_i, snap_f, Filenames):
+
+	# Read density and temperature perturbations
+	T_mean_c = np.zeros_like(Z)
+	T_mean_n = np.zeros_like(Z)
+	
+	for i in range(snap_i, snap_f):
+		with h5py.File(Filenames[i], 'r') as H5obj:
+	
+			# Ghost shells
+			if (i == snap_i): my_ghost = int(H5obj.attrs['my_ghost'])
+			Tc = np.array(H5obj['temp_c'][my_ghost:-my_ghost,0,0])
+			Tn = np.array(H5obj['temp_n'][my_ghost:-my_ghost,0,0])
+	
+		up_c, down_c  = Peaks(Z, Tc); up_n, down_n = Peaks(Z, Tn)
+		up_interp_c   = np.interp(Z, up_c[:,0]  , up_c[:,1]  )
+		up_interp_n   = np.interp(Z, up_n[:,0]  , up_n[:,1]  )
+		down_interp_c = np.interp(Z, down_c[:,0], down_c[:,1])
+		down_interp_n = np.interp(Z, down_n[:,0], down_n[:,1])
+		Tc = (up_interp_c + down_interp_c) / 2
+		Tn = (up_interp_n + down_interp_n) / 2
+	
+		T_mean_c = T_mean_c + Tc
+		T_mean_n = T_mean_n + Tn
+
+	T_mean_c = T_mean_c / 50
+	T_mean_n = T_mean_n / 50
+	
+	return [T_mean_c, T_mean_n]
+	
 # Read TvsZ.ini
 params = ConfigParser()
 params.sections()
@@ -86,10 +115,10 @@ Filenames_1f = sorted(glob.glob(Params['H5dir_1f'] + '*.h5'))
 eqfilename   = Params['eqfilename']
 figname      = Params['figname']
 div          = float(Params['div'])
+temp3        = bool(int(Params['temp3']))
 
 with h5py.File(eqfilename, 'r') as H5obj0:
 
-	
 	# Ghost shells
 	my_ghost0 = int(H5obj0.attrs['my_ghost'])
 	# Obtain dz
@@ -104,26 +133,63 @@ Z    = np.arange(mz) * dz * 1e-3 + 520 # Km
 # Plots
 plt.close()
 plt.figure(figsize = (8,6))
+
 plt.axvline(Z[int(mz/div)], linestyle = '--', color = 'k')
-T_mean_2f_0 = T_mean_2f_func(1950, 2000, Filenames_2f)
-plt.plot(Z, T_mean_2f_0, '--g', label = '195 - 200 s')
+if temp3:
+
+	T_mean_2f_c_0, T_mean_2f_n_0 = T_mean_2f_func2(1950, 2000, Filenames_2f)
+	plt.plot(Z, T_mean_2f_c_0, '-.g')
+	plt.plot(Z, T_mean_2f_n_0, '--g')
+
+else:
+
+	T_mean_2f_0 = T_mean_2f_func(1950, 2000, Filenames_2f)
+	plt.plot(Z, T_mean_2f_0, '--g')
+	
 T_mean_1f_0 = T_mean_1f_func(1950, 2000, Filenames_1f)
-plt.plot(Z, T_mean_1f_0, '-g')
+plt.plot(Z, T_mean_1f_0, '-g', label = '195 - 200 s')
 
-T_mean_2f_1 = T_mean_2f_func(1900, 1950, Filenames_2f)
-plt.plot(Z, T_mean_2f_1, '--k', label = '190 - 195 s')
+if temp3:
+
+	T_mean_2f_c_1, T_mean_2f_n_1 = T_mean_2f_func2(1900, 1950, Filenames_2f)
+	plt.plot(Z, T_mean_2f_c_1, '-.k')
+	plt.plot(Z, T_mean_2f_n_1, '--k')
+
+else:
+
+	T_mean_2f_1 = T_mean_2f_func(1900, 1950, Filenames_2f)
+	plt.plot(Z, T_mean_2f_1, '--k')
+	
 T_mean_1f_1 = T_mean_1f_func(1900, 1950, Filenames_1f)
-plt.plot(Z, T_mean_1f_1, '-k')
+plt.plot(Z, T_mean_1f_1, '-k', label = '190 - 195 s')
 
-T_mean_2f_2 = T_mean_2f_func(1850, 1900, Filenames_2f)
-plt.plot(Z, T_mean_2f_2, '--r', label = '185 - 190 s')
+if temp3:
+
+	T_mean_2f_c_2, T_mean_2f_n_2 = T_mean_2f_func2(1850, 1900, Filenames_2f)
+	plt.plot(Z, T_mean_2f_c_2, '-.r')
+	plt.plot(Z, T_mean_2f_n_2, '--r')
+
+else:
+
+	T_mean_2f_2 = T_mean_2f_func(1850, 1900, Filenames_2f)
+	plt.plot(Z, T_mean_2f_2, '--r')
+	
 T_mean_1f_2 = T_mean_1f_func(1850, 1900, Filenames_1f)
-plt.plot(Z, T_mean_1f_2, '-r')
+plt.plot(Z, T_mean_1f_2, '-r', label = '185 - 190 s')
 
-T_mean_2f_3 = T_mean_2f_func(1800, 1850, Filenames_2f)
-plt.plot(Z, T_mean_2f_3, '--b', label = '180 - 185 s')
+if temp3:
+
+	T_mean_2f_c_3, T_mean_2f_n_3 = T_mean_2f_func2(1800, 1850, Filenames_2f)
+	plt.plot(Z, T_mean_2f_c_3, '-.b')
+	plt.plot(Z, T_mean_2f_n_3, '--b')
+
+else:
+
+	T_mean_2f_3 = T_mean_2f_func(1800, 1850, Filenames_2f)
+	plt.plot(Z, T_mean_2f_3, '--b')
+	
 T_mean_1f_3 = T_mean_1f_func(1800, 1850, Filenames_1f)
-plt.plot(Z, T_mean_1f_3, '-b')
+plt.plot(Z, T_mean_1f_3, '-b', label = '180 - 185 s')
 
 plt.xlabel('Height (km)', fontsize = 14)
 plt.ylabel(r'$T_1$ (K)', fontsize = 14)

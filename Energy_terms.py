@@ -120,6 +120,10 @@ to_plot =int(n_dpts/2)
 # Obtain the Z-axis
 Z = np.arange(mz) * dz * 1e-3 + 520 # Km
 
+plt.close()
+plt.plot(np.arange(len(Pc0))*dz*1e-3 + 520, Pc0 + Pn0 / (gamma - 1))
+plt.show()
+
 # Obtain the density of internal energy times velocity divergence
 divuec = np.gradient(vz_c * PcT / (gamma - 1), dz) 
 divuen = np.gradient(vz_n * PnT / (gamma - 1), dz) 

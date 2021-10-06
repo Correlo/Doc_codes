@@ -33,6 +33,8 @@ def Cjbb(Dc0, Dn0, alpha):
 
 # Obtain temperature from equilibrium file
 h5Obj0 = h5py.File(h5eqatm, 'r')
+mx, my, mz = h5Obj0.attrs['dims']
+my_ghost = h5Obj0.attrs['my_ghost']
 Pc0 = np.array(h5Obj0['pe_c' ][:,0,0])
 Dc0 = np.array(h5Obj0['rho_c'][:,0,0])
 Pn0 = np.array(h5Obj0['pe_n' ][:,0,0])
@@ -56,5 +58,10 @@ plt.show()
 # Save results 
 with h5py.File(Output, 'w') as f:
 
+	f.attrs['dx']   = dz
+	f.attrs['dy']   = dz
+	f.attrs['dz']   = dz
+	f.attrs['dims'] = [mx,my,mz]
+	f.attrs['my_ghost'] = my_ghost
 	dset = f.create_dataset("nu_A", (len(nu_A), 1, 1),  dtype='f8', data=nu_A, chunks=True, shuffle=True)
 	

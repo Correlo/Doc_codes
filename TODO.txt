@@ -8,17 +8,18 @@ List of things TO DO currently:
 - Read the papers suggested by David.
 - Talk with Fan Zhang.
 - Find bibliography for the introduction of the publication.
-- In the first R. Soler paper, reproduce the Laplace transform calculus.
-- Plot the terms of the single fluid energy equation.
-- Plot the temperature of neutrals and ions separately.
 - Use only linear terms and increase the amplitude.
 - Plot the drift velocity.
 - Extent the chromosphere to the transition region.
 - Find the publication of Rankine-Hugoniot relations.
 - Plot T/R vs collisional frequency (see R. Soler et al. 2013a)
-- Calculated the solution of the wave equations using the Laplace transform.
 - Check Peter's equations.
 - Define a coefficient for the smoothing factor as function of the tau parameter.
+- Obtain the equations of temperature evolution for 1F and 2F.
+- Measure the 'collisional heating term'.
+- Install mancha3D-2F in the PC of my office.
+- Use an explicit scheme for collisional terms instead of a the implicit one to compare with single fluid numeric results (This way, we will have the same scheme for both simulations).
+- Plot only the collisional terms.
 
 
 
