@@ -13,9 +13,7 @@ List of things TO DO currently:
 - Extent the chromosphere to the transition region.
 - Find the publication of Rankine-Hugoniot relations.
 - Plot T/R vs collisional frequency (see R. Soler et al. 2013a)
-- Check Peter's equations.
 - Define a coefficient for the smoothing factor as function of the tau parameter.
-- Obtain the equations of temperature evolution for 1F and 2F.
 - Measure the 'collisional heating term'.
 - Install mancha3D-2F in the PC of my office.
 - Use an explicit scheme for collisional terms instead of a the implicit one to compare with single fluid numeric results (This way, we will have the same scheme for both simulations).

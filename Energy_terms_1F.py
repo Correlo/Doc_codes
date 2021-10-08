@@ -104,10 +104,6 @@ Z = np.arange(mz) * dz * 1e-3 + 520 # Km
 # Obtain the density of internal energy times velocity divergence
 divue = np.gradient(vz * PT / (gamma - 1), dz) 
 
-plt.close()
-plt.plot(np.arange(len(PT))*dz*1e-3 + 520, P0 / (gamma - 1))
-plt.show()
-
 # Obtain pressure power 
 PP = PT * np.gradient(vz, dz)
 
@@ -129,7 +125,7 @@ plt.plot(Z, divue / D0, '-g' , label = r'$\frac{\partial u e}{\partial z}$'  )
 plt.plot(Z, -PP / D0, '-m' , label = r'$-\frac{P \partial u }{\partial z}$'  )
 plt.plot(Z, dedt[to_plot] / D0, '-y' , label = r'$\frac{\partial e}{\partial t}$')
 if with_B0x:
-	plt.plot(Z, ambW * 1e2 / D0, '-b' , label = r'$W_{amb}$')
+	plt.plot(Z, ambW / D0, '-b' , label = r'$W_{amb}$')
 
 plt.legend(frameon = False, fontsize = 14)
 plt.xlim(min(Z), max(Z))
@@ -141,6 +137,5 @@ plt.tick_params(axis ='both', direction='inout', which='minor',
 plt.tick_params(axis='both', direction='in', which='major',
                  length=8, width=1, labelsize=13, top = True, right = True)
 plt.minorticks_on()
-plt.tight_layout(pad = 3.0)
 
 plt.savefig('../Doc_data/Figures/' + Outname)
