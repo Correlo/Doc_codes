@@ -82,7 +82,7 @@ vz_aux = np.zeros((n_dpts, mz))
 P_aux  = np.zeros((n_dpts, mz))
 D_aux  = np.zeros((n_dpts, mz))
 
-for i, H5file in enumerate(Filenames[n_file - int(n_dpts/2):n_file +int(n_dpts/2)]):
+for i, H5file in enumerate(Filenames[n_file - int(n_dpts/2):n_file + int(n_dpts/2)]):
 	with h5py.File(H5file, 'r') as H5obj:
 		vz_aux[i]  = np.array(H5obj['vz_c'  ][my_ghost:-my_ghost,0,0])
 		P_aux[i]   = np.array(H5obj['pe_c'  ][my_ghost:-my_ghost,0,0])
@@ -96,7 +96,7 @@ e = PTT / (gamma - 1)  ; del(PTT)
 			
 # Obtain the time derivative of these quantities
 dedt = np.gradient(e, dt, axis = 0)
-to_plot =int(n_dpts/2)
+to_plot = int(n_dpts/2)
 
 # Obtain the Z-axis
 Z = np.arange(mz) * dz * 1e-3 + 520 # Km

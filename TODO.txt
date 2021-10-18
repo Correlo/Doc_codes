@@ -6,7 +6,6 @@ List of things TO DO currently:
 - Introduce more complex drivers into simulations.
 - Read chapter 4 of "Principles of Magnetohydrodynamics".
 - Read the papers suggested by David.
-- Talk with Fan Zhang.
 - Find bibliography for the introduction of the publication.
 - Use only linear terms and increase the amplitude.
 - Plot the drift velocity.
@@ -16,8 +15,12 @@ List of things TO DO currently:
 - Define a coefficient for the smoothing factor as function of the tau parameter.
 - Measure the 'collisional heating term'.
 - Install mancha3D-2F in the PC of my office.
-- Use an explicit scheme for collisional terms instead of a the implicit one to compare with single fluid numeric results (This way, we will have the same scheme for both simulations).
-- Plot only the collisional terms.
+- Use an explicit scheme for collisional terms instead of a the implicit one to compare with single fluid numeric results (This way, we will have the same scheme for both simulations). (Homogeneous atmosphere).
+- Update TvsZ.py to allow to introducing a list of ranges.
+- Read Peter's papers.
+- Prepare a code to generate animations for tomorrow.
+- Improve the plot of the collisional terms to highlight the important terms and avoid overlapping.
+
 
 
 

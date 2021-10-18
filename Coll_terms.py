@@ -16,6 +16,14 @@ def Alpha(T0):
 	alpha = term1 + term2
 
 	return alpha
+	
+def Roll_Median(x, s):
+
+	# Create the output array 
+	Out = np.zeros_like(x)
+	
+	# Fill the boundaries
+	return Out
 
 # Read Coll_terms.ini
 params = ConfigParser()
@@ -28,7 +36,8 @@ H5file_1f  = Params['H5file_1f' ]
 H5file_2f  = Params['H5file_2f' ]
 H5file0_1f = Params['H5file0_1f']
 H5file0_2f = Params['H5file0_2f']
-Outname    = Params['Outname'   ] 
+Outname_1  = Params['Outname_1'   ] 
+Outname_2  = Params['Outname_2'   ]
 nu_A_file  = Params['nu_A_file' ]
 n_file  = int(Params['n_file' ])
 dt = float(Params['dt']) # s
@@ -65,7 +74,8 @@ BT = B + B0
         
 eta_tilde_A = nu_A / B0**2
 dBdz =  np.gradient(BT, dz) 
-ambW = eta_tilde_A / MU0**2 * dBdz**2 * B
+ambW = eta_tilde_A / MU0**2 * dBdz**2 * BT**2
+
 	
 
 ### Two fluid collisional terms ###
@@ -108,14 +118,16 @@ TE = 1 / (gamma - 1) * BK/MH * (TcT - TnT) * alpha * Dc0 * Dn0
 Z = np.arange(mz) * dz * 1e-3 + 520 # Km
 
 plt.close()
+plt.figure(1)
 plt.figure(figsize = (8, 7))
-plt.plot(Z, TE / Dc0, '-b' , label = r'$TE$')
-plt.plot(Z, Pcoll / Dc0, '-r' , label = r'$FH$')
-plt.plot(Z, ambW * 1e2 / D0, '-g' , label = r'$W_{amb}$')
+plt.plot(Z, TE / D0, '-b' , label = r'$TE$')
+plt.plot(Z, 2 * Pcoll / D0, '-r' , label = r'$FH$')
+plt.plot(Z, ambW / D0, '-g' , label = r'$W_{amb}$')
 plt.legend(frameon = False, fontsize = 14)
 plt.xlim(min(Z), max(Z))
+#plt.ylim(min(TE / D0)*1.1, 1000)
 plt.xlabel('Height (km)', fontsize = 14)
-plt.ylabel(r'I.E. terms per unit of $\rho$ $(Pa$ $m^3$ $s^{-1}$ $kg^{-1} )$', fontsize = 14)
+plt.ylabel(r'Heating terms per unit of $\rho$ $(Pa$ $m^3$ $s^{-1}$ $kg^{-1} )$', fontsize = 14)
 
 plt.tick_params(axis ='both', direction='inout', which='minor',
                  length=3, width=.5,labelsize=13, top = True, right = True)
@@ -124,8 +136,28 @@ plt.tick_params(axis='both', direction='in', which='major',
 plt.minorticks_on()
 plt.tight_layout(pad = 3.0)
 
-plt.savefig('../Doc_data/Figures/' + Outname)
+#plt.show()
+plt.savefig('../Doc_data/Figures/' + Outname_1)
 
+plt.close()
+plt.figure(2)
+plt.figure(figsize = (8, 7))
+plt.plot(Z, (Pcoll - TE) / (Dc0 * BK) * (gamma - 1) * 0.5 * MH, '-r', label = r'$Q_c$')
+plt.plot(Z, (Pcoll + TE) / (Dn0 * BK) * (gamma - 1) * MH, '-b', label = r'$Q_n$')
+plt.plot(Z, ambW  / (D0 * BK) * (gamma - 1) * MH, '-g' , label = r'$W_{amb}$')
+plt.legend(frameon = False, fontsize = 14)
+plt.xlim(min(Z), max(Z))
+plt.xlabel('Height (km)', fontsize = 14)
+plt.ylabel(r'Heating terms (K/s)', fontsize = 14)
+
+plt.tick_params(axis ='both', direction='inout', which='minor',
+                 length=3, width=.5,labelsize=13, top = True, right = True)
+plt.tick_params(axis='both', direction='in', which='major',
+                 length=8, width=1, labelsize=13, top = True, right = True)
+plt.minorticks_on()
+plt.tight_layout(pad = 3.0)
+
+plt.savefig('../Doc_data/Figures/' + Outname_2)
 
 	
 	
