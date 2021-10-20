@@ -78,11 +78,16 @@ plt.close()
 fig, ax = plt.subplots(5, 1, sharex = True, figsize = (12, 8))
 fig.subplots_adjust(hspace = 0)
 
-ax[0].plot(Z, vz , '-k', label = '1f ambipolar'); ax[0].plot(Z, vz2f, '--r' , label = '2f');
-ax[1].plot(Z, Pe , '-k'); ax[1].plot(Z, P2f , '--r')
-ax[2].plot(Z, T  , '-k'); ax[2].plot(Z, T2f , '--r')
-ax[3].plot(Z, D  , '-k'); ax[3].plot(Z, D2f , '--r')
-ax[4].plot(Z, B1f, '-k'); ax[4].plot(Z, B2f , '--r')
+# ax[0].plot(Z, vz , '-k', label = '1f ambipolar'); ax[0].plot(Z, vz2f, '--r' , label = '2f');
+# ax[1].plot(Z, Pe , '-k'); ax[1].plot(Z, P2f , '--r')
+# ax[2].plot(Z, T  , '-k'); ax[2].plot(Z, T2f , '--r')
+# ax[3].plot(Z, D  , '-k'); ax[3].plot(Z, D2f , '--r')
+# ax[4].plot(Z, B1f, '-k'); ax[4].plot(Z, B2f , '--r')
+ax[0].plot(Z, vz2f, '--r' , label = '2f'); ax[0].plot(Z, vz , '-k', label = '1f ambipolar'); 
+ax[1].plot(Z, P2f , '--r'); ax[1].plot(Z, Pe , '-k'); 
+ax[2].plot(Z, T2f , '--r'); ax[2].plot(Z, T  , '-k'); 
+ax[3].plot(Z, D2f , '--r'); ax[3].plot(Z, D  , '-k'); 
+ax[4].plot(Z, B2f , '--r'); ax[4].plot(Z, B1f, '-k'); 
 for i in range(5): ax[i].axvline(Z[int(N/div)], linestyle = '--', color = 'k')
 
 ax[0].set_ylabel(r'$u$ $(m$ $s^{-1})$', fontsize = 14); ax[1].set_ylabel(r'$P_1$ $(Pa)$', fontsize = 14)

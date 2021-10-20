@@ -14,12 +14,13 @@ List of things TO DO currently:
 - Plot T/R vs collisional frequency (see R. Soler et al. 2013a)
 - Define a coefficient for the smoothing factor as function of the tau parameter.
 - Measure the 'collisional heating term'.
-- Install mancha3D-2F in the PC of my office.
 - Use an explicit scheme for collisional terms instead of a the implicit one to compare with single fluid numeric results (This way, we will have the same scheme for both simulations). (Homogeneous atmosphere).
 - Update TvsZ.py to allow to introducing a list of ranges.
 - Read Peter's papers.
-- Prepare a code to generate animations for tomorrow.
 - Improve the plot of the collisional terms to highlight the important terms and avoid overlapping.
+- Numerical experiment: Increase the collisional parameter in a factor 10 to check the discrepancy in the am bipolar term.
+- Modify the Beatrice's code to introduce an evolution in the am bipolar coefficient according to the Saha-Boltzmann equation.
+
 
 
 

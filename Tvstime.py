@@ -107,7 +107,7 @@ T_mean_t_2f = np.zeros(len(snap_2f))
 for j, snap_i in enumerate(snap_2f):
 
 	T_mean = T_mean_2f_func(snap_i, snap_i + T_snap_2f, Filenames_2f)
-	T_mean_t_2f[j] = T_mean[-760]	
+	T_mean_t_2f[j] = T_mean[-140]	# 760
 	
 # Single-fluid temperature perturbation 
 T_snap_1f = 50
@@ -116,7 +116,7 @@ T_mean_t_1f = np.zeros(len(snap_1f))
 for j, snap_i in enumerate(snap_1f):
 
 	T_mean = T_mean_1f_func(snap_i, snap_i + T_snap_1f, Filenames_1f)
-	T_mean_t_1f[j] = T_mean[-760]
+	T_mean_t_1f[j] = T_mean[-140]
 	
 
 plt.close()
@@ -128,7 +128,7 @@ plt.ylabel(r'$T_1$ (K)', fontsize = 14)
 plt.xlim(min(snap_1f/10) - 2, max(snap_1f/10) + 2)
 plt.legend(frameon = False, fontsize = 13)
 plt.text(152.5, max(max(T_mean_t_2f), max(T_mean_t_1f)) - 0.05,
-         r'z ~ 1700 km', fontsize = 13)
+         r'z ~ 1950 km', fontsize = 13)
 plt.minorticks_on()
 plt.tick_params(axis ='both', direction='inout', which='minor',
                  length=3, width=.5,labelsize=13, top = True, right = True)

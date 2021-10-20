@@ -116,6 +116,22 @@ eqfilename   = Params['eqfilename']
 figname      = Params['figname']
 div          = float(Params['div'])
 temp3        = bool(int(Params['temp3']))
+ranges       = Params['ranges'].split(',')
+f_step       = int(Params['f_step'])
+pmlFraction  = float(Params['pmlFraction'])
+
+
+# Build the range list
+ranges = [int(ranges[0]), int(ranges[1])]
+low_r = ranges[0]
+ranges_l = []
+
+while low_r < ranges[1]:
+
+	ranges_l.append((low_r, low_r + f_step))
+	low_r += f_step
+	
+print(ranges_l)
 
 with h5py.File(eqfilename, 'r') as H5obj0:
 
@@ -135,65 +151,30 @@ plt.close()
 plt.figure(figsize = (8,6))
 
 plt.axvline(Z[int(mz/div)], linestyle = '--', color = 'k')
-if temp3:
+plt.axvline(Z[- int(pmlFraction * mz)], linestyle = '-', color = 'k')
 
-	T_mean_2f_c_0, T_mean_2f_n_0 = T_mean_2f_func2(1950, 2000, Filenames_2f)
-	plt.plot(Z, T_mean_2f_c_0, '-.g')
-	plt.plot(Z, T_mean_2f_n_0, '--g')
+colormap = plt.cm.get_cmap('gist_rainbow', 256)
+colors   = colormap(np.linspace(0, 1, len(ranges_l)))
 
-else:
+for i, r in enumerate(ranges_l[::-1]):
 
-	T_mean_2f_0 = T_mean_2f_func(1950, 2000, Filenames_2f)
-	plt.plot(Z, T_mean_2f_0, '--g')
+	if temp3:
+
+		T_mean_2f_c_0, T_mean_2f_n_0 = T_mean_2f_func2(r[0], r[1], Filenames_2f)
+		plt.plot(Z, T_mean_2f_c_0, '-.', color = colors[i])
+		plt.plot(Z, T_mean_2f_n_0, '--', color = colors[i])
+
+	else:
+
+		T_mean_2f_0 = T_mean_2f_func(r[0], r[1], Filenames_2f)
+		plt.plot(Z, T_mean_2f_0, '--', color = colors[i])
 	
-T_mean_1f_0 = T_mean_1f_func(1950, 2000, Filenames_1f)
-plt.plot(Z, T_mean_1f_0, '-g', label = '195 - 200 s')
-
-if temp3:
-
-	T_mean_2f_c_1, T_mean_2f_n_1 = T_mean_2f_func2(1900, 1950, Filenames_2f)
-	plt.plot(Z, T_mean_2f_c_1, '-.k')
-	plt.plot(Z, T_mean_2f_n_1, '--k')
-
-else:
-
-	T_mean_2f_1 = T_mean_2f_func(1900, 1950, Filenames_2f)
-	plt.plot(Z, T_mean_2f_1, '--k')
-	
-T_mean_1f_1 = T_mean_1f_func(1900, 1950, Filenames_1f)
-plt.plot(Z, T_mean_1f_1, '-k', label = '190 - 195 s')
-
-if temp3:
-
-	T_mean_2f_c_2, T_mean_2f_n_2 = T_mean_2f_func2(1850, 1900, Filenames_2f)
-	plt.plot(Z, T_mean_2f_c_2, '-.r')
-	plt.plot(Z, T_mean_2f_n_2, '--r')
-
-else:
-
-	T_mean_2f_2 = T_mean_2f_func(1850, 1900, Filenames_2f)
-	plt.plot(Z, T_mean_2f_2, '--r')
-	
-T_mean_1f_2 = T_mean_1f_func(1850, 1900, Filenames_1f)
-plt.plot(Z, T_mean_1f_2, '-r', label = '185 - 190 s')
-
-if temp3:
-
-	T_mean_2f_c_3, T_mean_2f_n_3 = T_mean_2f_func2(1800, 1850, Filenames_2f)
-	plt.plot(Z, T_mean_2f_c_3, '-.b')
-	plt.plot(Z, T_mean_2f_n_3, '--b')
-
-else:
-
-	T_mean_2f_3 = T_mean_2f_func(1800, 1850, Filenames_2f)
-	plt.plot(Z, T_mean_2f_3, '--b')
-	
-T_mean_1f_3 = T_mean_1f_func(1800, 1850, Filenames_1f)
-plt.plot(Z, T_mean_1f_3, '-b', label = '180 - 185 s')
+	T_mean_1f_0 = T_mean_1f_func(r[0], r[1], Filenames_1f)
+	plt.plot(Z, T_mean_1f_0, '-', label = '%d - %d s' % (r[0] / 10, r[1] / 10), color = colors[i])
 
 plt.xlabel('Height (km)', fontsize = 14)
 plt.ylabel(r'$T_1$ (K)', fontsize = 14)
-plt.xlim(min(Z), max(Z) - 50)
+plt.xlim(min(Z), max(Z))
 plt.legend(frameon = False, fontsize = 13)
 plt.minorticks_on()
 plt.tick_params(axis ='both', direction='inout', which='minor',
