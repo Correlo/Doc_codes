@@ -42,6 +42,17 @@ with h5py.File(H5file_1f, 'r') as H5obj_1f:
 	D   = np.array(H5obj_1f['rho_c' ])[my_ghost_1f:-my_ghost_1f,0,0]
 	B1f = np.array(H5obj_1f['bx'    ])[my_ghost_1f:-my_ghost_1f,0,0]
 
+eqfilename = '../Doc_data/Equilibrium/Strat_B0x_3212.h5'	
+with h5py.File(eqfilename, 'r') as H5obj0:
+
+	# Ghost shells
+	my_ghost0 = int(H5obj0.attrs['my_ghost'])
+	# Obtain data (1f)
+	Pc0   = np.array(H5obj0['pe_c'  ])[my_ghost0:-my_ghost0,0,0]
+	Pn0   = np.array(H5obj0['pe_n'  ])[my_ghost0:-my_ghost0,0,0]
+	Dc0   = np.array(H5obj0['rho_c' ])[my_ghost0:-my_ghost0,0,0]
+	Dn0   = np.array(H5obj0['rho_n' ])[my_ghost0:-my_ghost0,0,0]
+
 
 # z-axis
 Z  = np.arange(N) * dz * 1e-3 + 520 # Km
@@ -54,18 +65,20 @@ fig.subplots_adjust(hspace = 0)
 ax[0].set_title('Time = %.1f s' % t, fontsize = 15)
 ax[0].plot(Z, vz_c, '-r', label = 'charges'); ax[0].plot(Z, vz_n, '-b' , label = 'neutrals');
 ax[0].plot(Z, vz  , '-g', label = '1f'     )
-ax[1].plot(Z, Pc  , '-r'); ax[1].plot(Z, Pn , '-b'); ax[1].plot(Z, Pe, '-g')
+ax[1].plot(Z, Pc / Pc0 , '-r'); ax[1].plot(Z, Pn / Pn0 , '-b'); ax[1].plot(Z, Pe / (Pc0 + Pn0), '-g')
 ax[2].plot(Z, Tc  , '-r'); ax[2].plot(Z, Tn , '-b'); ax[2].plot(Z, T , '-g')
-ax[3].plot(Z, Dc  , '-r'); ax[3].plot(Z, Dn , '-b'); ax[3].plot(Z, D , '-g')
+ax[3].plot(Z, Dc /Dc0 , '-r'); ax[3].plot(Z, Dn / Dn0, '-b'); ax[3].plot(Z, D / (Dn0 + Dc0), '-g')
 ax[4].plot(Z, B   , '-y'); ax[4].plot(Z, B1f, '-g')
 
-ax[0].set_ylabel(r'$u$ $[m$ $s^{-1}]$', fontsize = 14); ax[1].set_ylabel(r'$P_1$ $[Pa]$', fontsize = 14)
-ax[2].set_ylabel(r'$T_1$ $[K]$', fontsize = 14); ax[3].set_ylabel(r'$\rho_1$ $[kg$ $m^{-3}]$', fontsize = 14)
+# r'$P_1$ $[Pa]$'
+# r'$\rho_1$ $[kg$ $m^{-3}]$'
+ax[0].set_ylabel(r'$u$ $[m$ $s^{-1}]$', fontsize = 14); ax[1].set_ylabel(r'$P_1 / P_0$', fontsize = 14)
+ax[2].set_ylabel(r'$T_1$ $[K]$', fontsize = 14); ax[3].set_ylabel(r'$\rho_1 / \rho_0$', fontsize = 14)
 ax[4].set_ylabel(r'$B_{1,x}$ [T]', fontsize = 14)
 ax[4].set_xlabel('Altitude [Km]', fontsize = 14)
 
 ax[0].legend(fontsize = 13, loc = 'upper left')
-ax[4].set_xlim(min(Z), max(Z) - 50)
+ax[4].set_xlim(min(Z), max(Z))
 
 ax[0].tick_params(axis ='both', direction='inout', which='minor',
                  length=3, width=.5,labelsize=13, right = True, top = True, bottom = False)

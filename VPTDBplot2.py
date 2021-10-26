@@ -78,16 +78,12 @@ plt.close()
 fig, ax = plt.subplots(5, 1, sharex = True, figsize = (12, 8))
 fig.subplots_adjust(hspace = 0)
 
-# ax[0].plot(Z, vz , '-k', label = '1f ambipolar'); ax[0].plot(Z, vz2f, '--r' , label = '2f');
-# ax[1].plot(Z, Pe , '-k'); ax[1].plot(Z, P2f , '--r')
-# ax[2].plot(Z, T  , '-k'); ax[2].plot(Z, T2f , '--r')
-# ax[3].plot(Z, D  , '-k'); ax[3].plot(Z, D2f , '--r')
-# ax[4].plot(Z, B1f, '-k'); ax[4].plot(Z, B2f , '--r')
-ax[0].plot(Z, vz2f, '--r' , label = '2f'); ax[0].plot(Z, vz , '-k', label = '1f ambipolar'); 
-ax[1].plot(Z, P2f , '--r'); ax[1].plot(Z, Pe , '-k'); 
-ax[2].plot(Z, T2f , '--r'); ax[2].plot(Z, T  , '-k'); 
-ax[3].plot(Z, D2f , '--r'); ax[3].plot(Z, D  , '-k'); 
-ax[4].plot(Z, B2f , '--r'); ax[4].plot(Z, B1f, '-k'); 
+
+ax[0].plot(Z, vz2f, '--r' , label = '2f'); #ax[0].plot(Z, vz , '-k', label = '1f ambipolar'); 
+ax[1].plot(Z, P2f / (Pc0 + Pn0) , '--r'); #ax[1].plot(Z, Pe / (Pc0 + Pn0) , '-k'); 
+ax[2].plot(Z, T2f , '--r'); #ax[2].plot(Z, T  , '-k'); 
+ax[3].plot(Z, D2f / (Dc0 + Dn0) , '--r'); #ax[3].plot(Z, D / (Dc0 + Dn0) , '-k'); 
+ax[4].plot(Z, B2f , '--r'); #ax[4].plot(Z, B1f, '-k'); 
 for i in range(5): ax[i].axvline(Z[int(N/div)], linestyle = '--', color = 'k')
 
 ax[0].set_ylabel(r'$u$ $(m$ $s^{-1})$', fontsize = 14); ax[1].set_ylabel(r'$P_1$ $(Pa)$', fontsize = 14)
@@ -96,7 +92,7 @@ ax[4].set_ylabel(r'$B_{1,x}$ (T)', fontsize = 14)
 ax[4].set_xlabel('Height (km)', fontsize = 14)
 
 ax[0].legend(fontsize = 13, loc = 'upper left')
-ax[4].set_xlim(min(Z), max(Z) - 50)
+ax[4].set_xlim(min(Z), max(Z))
 
 ax[0].tick_params(axis ='both', direction='inout', which='minor',
                  length=3, width=.5,labelsize=13, right = True, top = True, bottom = False)
@@ -123,7 +119,8 @@ ax[4].tick_params(axis='both', direction='in', which='major',
 for i in range(5): ax[i].ticklabel_format(axis = "y", style = "sci", scilimits = (0,0))
 for i in range(5): ax[i].minorticks_on()
 
-plt.savefig(figname)
+plt.show()
+#plt.savefig(figname)
 
 
 

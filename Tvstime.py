@@ -86,6 +86,10 @@ Filenames_1f = sorted(glob.glob(Params['H5dir_1f'] + '*.h5'))
 eqfilename   = Params['eqfilename']
 figname      = Params['figname']
 div          = float(Params['div'])
+ranges       = Params['ranges'].split(',')
+f_step       = int(Params['f_step'])
+Z_plot       = float(Params['Z_plot'])
+
 
 # Read the equilibrium files
 with h5py.File(eqfilename, 'r') as H5obj0:
@@ -98,25 +102,28 @@ with h5py.File(eqfilename, 'r') as H5obj0:
 	Dc0 = np.array(H5obj0['rho_c'][my_ghost0:-my_ghost0,0,0])
 	mz  = H5obj0.attrs['dims'][2]
 	
+	
+# Some previous calculus
+ranges = [int(ranges[0]), int(ranges[1])]
 Z    = np.arange(mz) * dz * 1e-3 + 520 # Km
+Zi   = int((Z_plot - 520) * 1e3 / dz)
+print(mz - Zi)
 	
 # Two-fluid temperature perturbation 
-T_snap_2f = 50
-snap_2f   = np.arange(1300, 2500, T_snap_2f)
+snap_2f   = np.arange(ranges[0], ranges[1], f_step)
 T_mean_t_2f = np.zeros(len(snap_2f))
 for j, snap_i in enumerate(snap_2f):
 
-	T_mean = T_mean_2f_func(snap_i, snap_i + T_snap_2f, Filenames_2f)
-	T_mean_t_2f[j] = T_mean[-140]	# 760
+	T_mean = T_mean_2f_func(snap_i, snap_i + f_step, Filenames_2f)
+	T_mean_t_2f[j] = T_mean[Zi]	# 760
 	
 # Single-fluid temperature perturbation 
-T_snap_1f = 50
-snap_1f   = np.arange(1300, 2500, T_snap_1f)
+snap_1f   = np.arange(ranges[0], ranges[1], f_step)
 T_mean_t_1f = np.zeros(len(snap_1f))
 for j, snap_i in enumerate(snap_1f):
 
-	T_mean = T_mean_1f_func(snap_i, snap_i + T_snap_1f, Filenames_1f)
-	T_mean_t_1f[j] = T_mean[-140]
+	T_mean = T_mean_1f_func(snap_i, snap_i + f_step, Filenames_1f)
+	T_mean_t_1f[j] = T_mean[Zi]
 	
 
 plt.close()
@@ -128,7 +135,7 @@ plt.ylabel(r'$T_1$ (K)', fontsize = 14)
 plt.xlim(min(snap_1f/10) - 2, max(snap_1f/10) + 2)
 plt.legend(frameon = False, fontsize = 13)
 plt.text(152.5, max(max(T_mean_t_2f), max(T_mean_t_1f)) - 0.05,
-         r'z ~ 1950 km', fontsize = 13)
+         r'z ~ %d km' % Z_plot, fontsize = 13)
 plt.minorticks_on()
 plt.tick_params(axis ='both', direction='inout', which='minor',
                  length=3, width=.5,labelsize=13, top = True, right = True)

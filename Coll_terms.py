@@ -136,8 +136,8 @@ plt.tick_params(axis='both', direction='in', which='major',
 plt.minorticks_on()
 plt.tight_layout(pad = 3.0)
 
-plt.show()
-#plt.savefig('../Doc_data/Figures/' + Outname_1)
+#plt.show()
+plt.savefig('../Doc_data/Figures/' + Outname_1)
 
 plt.close()
 plt.figure(2)

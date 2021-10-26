@@ -7,19 +7,21 @@ List of things TO DO currently:
 - Read chapter 4 of "Principles of Magnetohydrodynamics".
 - Read the papers suggested by David.
 - Find bibliography for the introduction of the publication.
-- Use only linear terms and increase the amplitude.
 - Plot the drift velocity.
 - Extent the chromosphere to the transition region.
 - Find the publication of Rankine-Hugoniot relations.
-- Plot T/R vs collisional frequency (see R. Soler et al. 2013a)
-- Define a coefficient for the smoothing factor as function of the tau parameter.
+- Plot T/R vs collisional frequency (see R. Soler et al. 2013a).
 - Measure the 'collisional heating term'.
 - Use an explicit scheme for collisional terms instead of a the implicit one to compare with single fluid numeric results (This way, we will have the same scheme for both simulations). (Homogeneous atmosphere).
-- Update TvsZ.py to allow to introducing a list of ranges.
 - Read Peter's papers.
 - Improve the plot of the collisional terms to highlight the important terms and avoid overlapping.
-- Numerical experiment: Increase the collisional parameter in a factor 10 to check the discrepancy in the am bipolar term.
-- Modify the Beatrice's code to introduce an evolution in the am bipolar coefficient according to the Saha-Boltzmann equation.
+- Plot Fig. 1 from Bea's publication.
+- Make a periodogram for TE and FH terms.
+- Deduce the period associated with the spacial lenghtscale for a snapshot and compare it with the collisional frequncy.
+- Make ambipolar coefficient evolve in time.
+- Evaluate the average mass mu to estimate the importance of the correction.
+
+
 
 
 

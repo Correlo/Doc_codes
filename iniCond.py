@@ -36,6 +36,7 @@ zzValc, tempValc, nnValc, neValc, rhoValc = np.loadtxt(valc_file, usecols=(0,3,5
 ## SUP LIMIT at T=9000K (at z approx 2.1 Mm) ##
 indValc = (tempValc <= 9000)
 # Fields 
+print(max(zzValc))
 zzValc   = zzValc[indValc]
 tempValc = tempValc[indValc]
 rhoValc  = rhoValc[indValc]
