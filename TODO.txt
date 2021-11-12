@@ -1,11 +1,9 @@
 List of things TO DO currently:
 
-- Upload all my TFM codes to GitHub.
 - Explore the simulation configurations proposed in my table.
 - Check if the solution obtained by Paul Cally satisfies the numerical solutions.
 - Introduce more complex drivers into simulations.
 - Read chapter 4 of "Principles of Magnetohydrodynamics".
-- Read the papers suggested by David.
 - Find bibliography for the introduction of the publication.
 - Plot the drift velocity.
 - Extent the chromosphere to the transition region.
@@ -17,9 +15,13 @@ List of things TO DO currently:
 - Improve the plot of the collisional terms to highlight the important terms and avoid overlapping.
 - Plot Fig. 1 from Bea's publication.
 - Make a periodogram for TE and FH terms.
-- Deduce the period associated with the spacial lenghtscale for a snapshot and compare it with the collisional frequncy.
+- Deduce the period associated with the spacial lengthscale for a snapshot and compare it with the collisional frequncy.
 - Make ambipolar coefficient evolve in time.
 - Evaluate the average mass mu to estimate the importance of the correction.
+- Plot the quotient between charges and neutrals to highlight the decoupling of both species.
+- Plot the collisional frequencies between hydrogen and different species until iron as a function of the altitude.
+- Write the set of MHD equations for a pure hydrogen plasma including the radiation field in the description. 
+
 
 
 

@@ -39,11 +39,27 @@ with h5py.File(h5eqatm_1F, 'r') as h5Obj0:
 	
 T0 = P0 / (D0 * BK) * MH
 
+
+Z = np.arange(mz) * dz * 1e-3 + 520 #Km
+
+T00  = T0[0]
+Dn00 = Dn0[0]
+Dc00 = Dc0[0]
+
+Hn = BK * T00 / (MH * G)
+Hc = 2 * BK * T00 / (MH * G)
+
+Dn0_2 = Dn00 * np.exp(- Z * 1e3 / Hn)
+Dc0_2 = Dc00 * np.exp(- Z * 1e3 / Hc)
+
+n_2 = Dn0_2 /MH + 2 * Dc0_2 / (2 * MH) 
+
+
 # Obtain the fraction of neutrals of each model
 xi_n_2f = Dn0 / (Dn0 + Dc0)
 
 n = Dn0 /MH + 2 * Dc0 / (2 * MH) 
-S = Saha_mod(T0, n)
+S = Saha_mod(T00, n_2)
 #print(S)
 x_i_Saha = X(S)
 #print(x_i_Saha)
@@ -56,8 +72,6 @@ rho_c = MH * mu_c * nc
 rho_n = MH * mu_n * (n - ne) 
 xi_n_Saha = rho_n / (rho_n + rho_c)
 #print(xi_n_Saha)
-
-Z = np.arange(mz) * dz * 1e-3 + 520 #
 
 plt.close()
 plt.plot(Z, xi_n_2f  , label = '2F'  )
