@@ -5,7 +5,6 @@ List of things TO DO currently:
 - Introduce more complex drivers into simulations.
 - Read chapter 4 of "Principles of Magnetohydrodynamics".
 - Find bibliography for the introduction of the publication.
-- Plot the drift velocity.
 - Extent the chromosphere to the transition region.
 - Find the publication of Rankine-Hugoniot relations.
 - Plot T/R vs collisional frequency (see R. Soler et al. 2013a).
@@ -21,6 +20,9 @@ List of things TO DO currently:
 - Plot the quotient between charges and neutrals to highlight the decoupling of both species.
 - Plot the collisional frequencies between hydrogen and different species until iron as a function of the altitude.
 - Write the set of MHD equations for a pure hydrogen plasma including the radiation field in the description. 
+- Modify the mask to adapt it to the size of the pml. 
+
+
 
 
 

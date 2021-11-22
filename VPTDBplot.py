@@ -8,29 +8,29 @@ import h5py
 import sys
 
 # Obtain the name of hdf5 file
-H5file_2f = str(sys.argv[1]) 
-H5file_1f = str(sys.argv[2]) 
-#H5file_1f_2 = str(sys.argv[2]) 
+#H5file_2f = str(sys.argv[1]) 
+H5file_1f = str(sys.argv[1]) 
+H5file_1f_2 = str(sys.argv[2]) 
 
-with h5py.File(H5file_2f, 'r') as H5obj_2f:
-
-	# Ghost shells
-	my_ghost_2f = int(H5obj_2f.attrs['my_ghost'])
-	# Obtain dz
-	dz = H5obj_2f.attrs['dz']
-	# Obtain time
-	t = H5obj_2f.attrs['time'] 
-	# Obtain data (2f)
-	vz_c = np.array(H5obj_2f['vz_c'  ])[my_ghost_2f:-my_ghost_2f,0,0]
-	vz_n = np.array(H5obj_2f['vz_n'  ])[my_ghost_2f:-my_ghost_2f,0,0]
-	Pc   = np.array(H5obj_2f['pe_c'  ])[my_ghost_2f:-my_ghost_2f,0,0]
-	Pn   = np.array(H5obj_2f['pe_n'  ])[my_ghost_2f:-my_ghost_2f,0,0]
-	Tc   = np.array(H5obj_2f['temp_c'])[my_ghost_2f:-my_ghost_2f,0,0]
-	Tn   = np.array(H5obj_2f['temp_n'])[my_ghost_2f:-my_ghost_2f,0,0]
-	Dc   = np.array(H5obj_2f['rho_c' ])[my_ghost_2f:-my_ghost_2f,0,0]
-	Dn   = np.array(H5obj_2f['rho_n' ])[my_ghost_2f:-my_ghost_2f,0,0]
-	B    = np.array(H5obj_2f['bx'    ])[my_ghost_2f:-my_ghost_2f,0,0]
-	N    = H5obj_2f.attrs['dims'][2]
+# with h5py.File(H5file_2f, 'r') as H5obj_2f:
+# 
+# 	# Ghost shells
+# 	my_ghost_2f = int(H5obj_2f.attrs['my_ghost'])
+# 	# Obtain dz
+# 	dz = H5obj_2f.attrs['dz']
+# 	# Obtain time
+# 	t = H5obj_2f.attrs['time'] 
+# 	# Obtain data (2f)
+# 	vz_c = np.array(H5obj_2f['vz_c'  ])[my_ghost_2f:-my_ghost_2f,0,0]
+# 	vz_n = np.array(H5obj_2f['vz_n'  ])[my_ghost_2f:-my_ghost_2f,0,0]
+# 	Pc   = np.array(H5obj_2f['pe_c'  ])[my_ghost_2f:-my_ghost_2f,0,0]
+# 	Pn   = np.array(H5obj_2f['pe_n'  ])[my_ghost_2f:-my_ghost_2f,0,0]
+# 	Tc   = np.array(H5obj_2f['temp_c'])[my_ghost_2f:-my_ghost_2f,0,0]
+# 	Tn   = np.array(H5obj_2f['temp_n'])[my_ghost_2f:-my_ghost_2f,0,0]
+# 	Dc   = np.array(H5obj_2f['rho_c' ])[my_ghost_2f:-my_ghost_2f,0,0]
+# 	Dn   = np.array(H5obj_2f['rho_n' ])[my_ghost_2f:-my_ghost_2f,0,0]
+# 	B    = np.array(H5obj_2f['bx'    ])[my_ghost_2f:-my_ghost_2f,0,0]
+# 	N    = H5obj_2f.attrs['dims'][2]
 
 with h5py.File(H5file_1f, 'r') as H5obj_1f:
 
@@ -47,18 +47,16 @@ with h5py.File(H5file_1f, 'r') as H5obj_1f:
 # 	# Obtain time
 	t = H5obj_1f.attrs['time']
 	
-# with h5py.File(H5file_1f_2, 'r') as H5obj_1f:
-# 
-# 	# Ghost shells
-# 	my_ghost_1f = int(H5obj_1f.attrs['my_ghost'])
-# 	# Obtain data (1f)
-# 	vz_2  = np.array(H5obj_1f['vz_c'  ])[my_ghost_1f:-my_ghost_1f,0,0]
-# 	Pe_2  = np.array(H5obj_1f['pe_c'  ])[my_ghost_1f:-my_ghost_1f,0,0]
-# 	T_2   = np.array(H5obj_1f['temp_c'])[my_ghost_1f:-my_ghost_1f,0,0]
-# 	D_2   = np.array(H5obj_1f['rho_c' ])[my_ghost_1f:-my_ghost_1f,0,0]
-# 	B1f_2 = np.array(H5obj_1f['bx'    ])[my_ghost_1f:-my_ghost_1f,0,0]
+with h5py.File(H5file_1f_2, 'r') as H5obj_1f:
 
-#print(Pe[100], Pc[100], Pn[100])
+	# Ghost shells
+	my_ghost_1f = int(H5obj_1f.attrs['my_ghost'])
+	# Obtain data (1f)
+	vz_2  = np.array(H5obj_1f['vz_c'  ])[my_ghost_1f:-my_ghost_1f,0,0]
+	Pe_2  = np.array(H5obj_1f['pe_c'  ])[my_ghost_1f:-my_ghost_1f,0,0]
+	T_2   = np.array(H5obj_1f['temp_c'])[my_ghost_1f:-my_ghost_1f,0,0]
+	D_2   = np.array(H5obj_1f['rho_c' ])[my_ghost_1f:-my_ghost_1f,0,0]
+	B1f_2 = np.array(H5obj_1f['bx'    ])[my_ghost_1f:-my_ghost_1f,0,0]
 
 eqfilename = '../Doc_data/Equilibrium/Strat_B0x_3212.h5'	
 with h5py.File(eqfilename, 'r') as H5obj0:
@@ -81,21 +79,21 @@ fig, ax = plt.subplots(5, 1, sharex = True, figsize = (12, 8))
 fig.subplots_adjust(hspace = 0)
 
 ax[0].set_title('Time = %.1f s' % t, fontsize = 15)
-ax[0].plot(Z, vz_c, '-r', label = 'charges'); ax[0].plot(Z, vz_n, '-b' , label = 'neutrals');
+#ax[0].plot(Z, vz_c, '-r', label = 'charges'); ax[0].plot(Z, vz_n, '-b' , label = 'neutrals');
 ax[0].plot(Z, vz  , '-g', label = '1f'     )
-#ax[0].plot(Z, vz_2, '-r', label = '1f'     )
-ax[1].plot(Z, Pc / Pc0 , '-r'); ax[1].plot(Z, Pn / Pn0 , '-b');
+ax[0].plot(Z, vz_2, '--r', label = '1f'     )
+#ax[1].plot(Z, Pc / Pc0 , '-r'); ax[1].plot(Z, Pn / Pn0 , '-b');
 ax[1].plot(Z, Pe / (Pc0 + Pn0), '-g')
-#ax[1].plot(Z, Pe_2 / (Pc0 + Pn0), '-r')
-ax[2].plot(Z, Tc  , '-r'); ax[2].plot(Z, Tn , '-b');
+ax[1].plot(Z, Pe_2 / (Pc0 + Pn0), '--r')
+#ax[2].plot(Z, Tc  , '-r'); ax[2].plot(Z, Tn , '-b');
 ax[2].plot(Z, T , '-g')
-#ax[2].plot(Z, T_2 , '-r')
-ax[3].plot(Z, Dc /Dc0 , '-r'); ax[3].plot(Z, Dn / Dn0, '-b'); 
+ax[2].plot(Z, T_2 , '--r')
+#ax[3].plot(Z, Dc /Dc0 , '-r'); ax[3].plot(Z, Dn / Dn0, '-b'); 
 ax[3].plot(Z, D / (Dn0 + Dc0), '-g')
-#ax[3].plot(Z, D_2 / (Dn0 + Dc0), '-r')
-ax[4].plot(Z, B   , '-y'); 
+ax[3].plot(Z, D_2 / (Dn0 + Dc0), '--r')
+#ax[4].plot(Z, B   , '-y'); 
 ax[4].plot(Z, B1f, '-g')
-#ax[4].plot(Z, B1f_2, '-r')
+ax[4].plot(Z, B1f_2, '--r')
 
 # r'$P_1$ $[Pa]$'
 # r'$\rho_1$ $[kg$ $m^{-3}]$'
